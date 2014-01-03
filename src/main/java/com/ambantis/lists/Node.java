@@ -26,4 +26,44 @@ class Node<T> {
   void setNext(Node<T> ts) {
     this.ts = ts;
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof Node))
+      return false;
+    Node<Object> that = (Node) o;
+    if (!that.data().equals(this.data()))
+      return false;
+    if (that.next() == null && ts != null || that.next() != null && ts == null)
+      return false;
+    if (that.data().equals(t) &&
+        (that.next() == null && ts == null) || (that.next().equals(ts)))
+      return true;
+    else
+      return false;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = 17;
+    result += t.hashCode();
+    Node<T> iter = ts;
+    while(iter.ts != null) {
+      result += iter.t.hashCode();
+      iter = iter.ts;
+    }
+    return result;
+  }
+
+  @Override
+  public String toString() {
+    int i = 0;
+    Node iter = ts;
+    while (iter != null) {
+      i++;
+    }
+    Node[] nodes = new Node[i];
+    
+    return "hello";
+  }
 }
