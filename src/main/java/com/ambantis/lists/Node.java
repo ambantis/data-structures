@@ -1,6 +1,7 @@
 package com.ambantis.lists;
 
 import java.lang.NullPointerException;
+import java.lang.StringBuilder;
 
 class Node<T> {
   private T t;
@@ -57,13 +58,6 @@ class Node<T> {
 
   @Override
   public String toString() {
-    int i = 0;
-    Node iter = ts;
-    while (iter != null) {
-      i++;
-    }
-    Node[] nodes = new Node[i];
-    
-    return "hello";
+    return "Node(" + t.toString() + "," + ((ts == null) ? "null" : ts.toString()) + ")";
   }
 }
