@@ -1,3 +1,3 @@
 package com.ambantis;
 
-public void testApp() {}
+public class AppTest {}
