@@ -54,4 +54,15 @@ public class NodeTest {
     assertFalse("Failure - two nodes with different `rest()` should not be equal",
         node1.equals(node2));
   }
+
+  @Test
+  public void testNodeToString() {
+    String expected = "Node(1,Node(2,Node(3,Node(4,null))))";
+    Node<Integer> node4 = new Node<Integer>(4,null);
+    Node<Integer> node3 = new Node<Integer>(3,node4);
+    Node<Integer> node2 = new Node<Integer>(2,node3);
+    Node<Integer> node1 = new Node<Integer>(1,node2);
+    assertTrue("Failure - node1 = " + node1.toString(), node1.toString().equals(expected));
+  }
+
 }
