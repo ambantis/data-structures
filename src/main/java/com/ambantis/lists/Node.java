@@ -1,7 +1,6 @@
 package com.ambantis.lists;
 
 import java.lang.NullPointerException;
-import java.lang.StringBuilder;
 
 class Node<T> {
   private T t;
