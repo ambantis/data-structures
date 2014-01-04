@@ -17,8 +17,16 @@ public class SingleLinkedList<T> implements Iterable<T> {
         nodes[i] = new Node<T>(ts[i], null);
       for (int i = nodes.length-2; i > -1; i--)
         nodes[i].setNext(nodes[i+1]);
-      firstNode = (Node<T>) nodes[0];
+      firstNode = nodes[0];
     }
+  }
+
+  public int size() {
+    int size = 0;
+    for (T element: this) {
+      size++;
+    }
+    return size;
   }
 
   public Iterator<T> iterator() {
@@ -30,7 +38,7 @@ public class SingleLinkedList<T> implements Iterable<T> {
 
       @Override
       public boolean hasNext() {
-        return nextNode == null;
+        return nextNode != null;
       }
 
       @Override
@@ -49,7 +57,9 @@ public class SingleLinkedList<T> implements Iterable<T> {
       public void remove() {
         if (removable) { // if lastNode is null, then user attempting to call remove twice
           if (prevNode == null) { // we are trying to remove the first element of the collection
-            firstNode = firstNode.next();
+            firstNode = nextNode; // so reset everything
+            lastNode = null;
+            prevNode = null;
           } else { //
             prevNode.setNext(nextNode);
           }

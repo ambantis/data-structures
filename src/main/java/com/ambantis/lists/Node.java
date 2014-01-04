@@ -23,8 +23,8 @@ class Node<T> {
     return ts;
   }
 
-  void setNext(Node<T> ts) {
-    this.ts = ts;
+  void setNext(Node<T> node) {
+    ts = node;
   }
 
   @Override
@@ -63,6 +63,9 @@ class Node<T> {
 
   @Override
   public String toString() {
-    return "Node(" + t.toString() + "," + ((ts == null) ? "null" : ts.toString()) + ")";
+    if (this == null)
+      return "Node()";
+    else
+      return "Node(" + t.toString() + "," + ((ts == null) ? "null" : ts.toString()) + ")";
   }
 }
