@@ -31,16 +31,22 @@ class Node<T> {
   public boolean equals(Object o) {
     if (!(o instanceof Node))
       return false;
-    Node<Object> that = (Node) o;
-    if (!that.data().equals(this.data()))
-      return false;
-    if (that.next() == null && ts != null || that.next() != null && ts == null)
-      return false;
-    if (that.data().equals(t) &&
-        (that.next() == null && ts == null) || (that.next().equals(ts)))
+    Node<T> that = (Node<T>) o;
+
+    if (this == null && that == null)
       return true;
-    else
+    else if (this == null && that != null || this != null && that == null)
       return false;
+    else if (!that.data().equals(t))
+      return false;
+    else if (that.next() == null && ts == null)
+      return true;
+    else if (that.next() == null && ts != null || that.next() != null && ts == null)
+      return false;
+    else if (!that.next().equals(ts))
+      return false;
+    else
+      return true;
   }
 
   @Override
@@ -48,7 +54,7 @@ class Node<T> {
     int result = 17;
     result += t.hashCode();
     Node<T> iter = ts;
-    while(iter.ts != null) {
+    while(iter != null) {
       result += iter.t.hashCode();
       iter = iter.ts;
     }
