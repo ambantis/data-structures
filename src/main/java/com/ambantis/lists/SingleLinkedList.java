@@ -4,17 +4,17 @@ import java.lang.Iterable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class SingleLinkedList<T> implements Iterable<T> {
+public class SingleLinkedList<E> implements Iterable<E> {
 
-  private Node<T> firstNode = null;
+  private Node<E> firstNode = null;
 
   public SingleLinkedList() {}
 
-  public SingleLinkedList(T... ts) {
-    if (ts != null && ts.length > 0) {
-      Node[] nodes = new Node[ts.length];
-      for (int i = 0; i < ts.length; i++)
-        nodes[i] = new Node<T>(ts[i], null);
+  public SingleLinkedList(E... es) {
+    if (es != null && es.length > 0) {
+      Node[] nodes = new Node[es.length];
+      for (int i = 0; i < es.length; i++)
+        nodes[i] = new Node<E>(es[i], null);
       for (int i = nodes.length-2; i > -1; i--)
         nodes[i].setNext(nodes[i+1]);
       firstNode = nodes[0];
@@ -23,18 +23,18 @@ public class SingleLinkedList<T> implements Iterable<T> {
 
   public int size() {
     int size = 0;
-    for (T element: this) {
+    for (E element : this) {
       size++;
     }
     return size;
   }
 
-  public Iterator<T> iterator() {
-    Iterator<T> it = new Iterator<T>() {
+  public Iterator<E> iterator() {
+    Iterator<E> it = new Iterator<E>() {
       private boolean removable = false;
-      private Node<T> prevNode;
-      private Node<T> lastNode;
-      private Node<T> nextNode = firstNode;
+      private Node<E> prevNode;
+      private Node<E> lastNode;
+      private Node<E> nextNode = firstNode;
 
       @Override
       public boolean hasNext() {
@@ -42,10 +42,10 @@ public class SingleLinkedList<T> implements Iterable<T> {
       }
 
       @Override
-      public T next() {
+      public E next() {
         if (!hasNext())
           throw new NoSuchElementException("the list has no more elements");
-        T data = nextNode.data();
+        E data = nextNode.data();
         removable = true;
         prevNode = lastNode;
         lastNode = nextNode;

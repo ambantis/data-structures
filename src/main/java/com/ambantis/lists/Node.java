@@ -2,48 +2,48 @@ package com.ambantis.lists;
 
 import java.lang.NullPointerException;
 
-class Node<T> {
-  private T t;
-  private Node<T> ts;
+class Node<E> {
+  private E e;
+  private Node<E> es;
 
   private Node() {}
 
-  Node(T t, Node<T> ts) {
-    if (t == null)
+  Node(E e, Node<E> es) {
+    if (e == null)
       throw new NullPointerException("A list node data element cannot be null");
-    this.t = t;
-    this.ts = ts;
+    this.e = e;
+    this.es = es;
   }
 
-  T data() {
-    return t;
+  E data() {
+    return e;
   }
 
-  Node<T> next() {
-    return ts;
+  Node<E> next() {
+    return es;
   }
 
-  void setNext(Node<T> node) {
-    ts = node;
+  void setNext(Node<E> node) {
+    es = node;
   }
 
   @Override
   public boolean equals(Object o) {
     if (!(o instanceof Node))
       return false;
-    Node<T> that = (Node<T>) o;
+    Node<E> that = (Node<E>) o;
 
     if (this == null && that == null)
       return true;
     else if (this == null && that != null || this != null && that == null)
       return false;
-    else if (!that.data().equals(t))
+    else if (!that.data().equals(e))
       return false;
-    else if (that.next() == null && ts == null)
+    else if (that.next() == null && es == null)
       return true;
-    else if (that.next() == null && ts != null || that.next() != null && ts == null)
+    else if (that.next() == null && es != null || that.next() != null && es == null)
       return false;
-    else if (!that.next().equals(ts))
+    else if (!that.next().equals(es))
       return false;
     else
       return true;
@@ -52,11 +52,11 @@ class Node<T> {
   @Override
   public int hashCode() {
     int result = 17;
-    result += t.hashCode();
-    Node<T> iter = ts;
+    result += e.hashCode();
+    Node<E> iter = es;
     while(iter != null) {
-      result += iter.t.hashCode();
-      iter = iter.ts;
+      result += iter.e.hashCode();
+      iter = iter.es;
     }
     return result;
   }
@@ -66,6 +66,6 @@ class Node<T> {
     if (this == null)
       return "Node()";
     else
-      return "Node(" + t.toString() + "," + ((ts == null) ? "null" : ts.toString()) + ")";
+      return "Node(" + e.toString() + "," + ((es == null) ? "null" : es.toString()) + ")";
   }
 }
