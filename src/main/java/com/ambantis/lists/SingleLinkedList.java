@@ -1,10 +1,11 @@
 package com.ambantis.lists;
 
 import java.lang.Iterable;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class SingleLinkedList<E> implements Iterable<E> {
+public class SingleLinkedList<E> implements Collection<E> {
 
   private Node<E> firstNode = null;
 
@@ -21,6 +22,7 @@ public class SingleLinkedList<E> implements Iterable<E> {
     }
   }
 
+  @Override
   public int size() {
     int size = 0;
     for (E element : this) {
@@ -29,6 +31,25 @@ public class SingleLinkedList<E> implements Iterable<E> {
     return size;
   }
 
+  @Override
+  public boolean isEmpty() {
+    return firstNode == null;
+  }
+
+  @Override
+  public boolean contains(Object o) {
+    if (o == null)
+      throw new NullPointerException("This collection does not permit null elements");
+    E that = (E) o;
+    Iterator<E> it = this.iterator();
+    while (it.hasNext()) {
+      if (it.next().equals(that))
+        return true;
+    }
+    return false;
+  }
+
+  @Override
   public Iterator<E> iterator() {
     Iterator<E> it = new Iterator<E>() {
       private boolean removable = false;
@@ -69,5 +90,51 @@ public class SingleLinkedList<E> implements Iterable<E> {
     };
     return it;
   }
+
+  @Override
+  public Object[] toArray() {
+    int size = this.size();
+    Object[] result = new Object[size];
+    int i = 0;
+    for (Iterator<E> it = this.iterator(); it.hasNext(); i++) {
+      result[i] = (Object) it.next();
+    }
+    return result;
+  }
+
+  @Override
+  public <T> T[] toArray(T[] a) {
+    if (a == null)
+      throw new NullPointerException("the specified array is null");
+    
+  }
+
+  @Override
+  public boolean add(E e) {
+    if (e == null)
+      throw new NullPointerException("the specified array is null");
+    int oldSize = this.size();
+    firstNode = new Node(e, firstNode);
+    if (oldSize == this.size() - 1)
+      return true;
+    else
+      return false;
+  }
+
+  @Override
+  public boolean remove(E e) {
+    if (e == null)
+      throw new NullPointerException("the specified array is null");
+    Iterator<E> it = this.iterator();
+    while (it.hasNext()) {
+      if (it.next().equals(e)) {
+        it.remove();
+        return true;
+      }
+    }
+    return false;
+  }
+
+  
 
 }
