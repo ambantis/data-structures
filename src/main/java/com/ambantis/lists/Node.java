@@ -2,70 +2,58 @@ package com.ambantis.lists;
 
 import java.lang.NullPointerException;
 
-class Node<E> {
-  private E e;
-  private Node<E> es;
+class Node<T> {
+  private T t;
+  private Node<T> ts;
 
   private Node() {}
-
-  Node(E e, Node<E> es) {
-    if (e == null)
-      throw new NullPointerException("A list node data element cannot be null");
-    this.e = e;
-    this.es = es;
+  Node(T t, Node<T> ts) {
+    if (t == null)
+      throw new NullPointerException("nodes must contain a non-null value");
+    this.t = t;
+    this.ts = ts;
   }
 
-  E data() {
-    return e;
-  }
+  T data() { return t; }
 
-  Node<E> next() {
-    return es;
-  }
+  Node<T> next() { return ts; }
 
-  void setNext(Node<E> node) {
-    es = node;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (!(o instanceof Node))
-      return false;
-    Node<E> that = (Node<E>) o;
-
-    if (this == null && that == null)
-      return true;
-    else if (this == null && that != null || this != null && that == null)
-      return false;
-    else if (!that.data().equals(e))
-      return false;
-    else if (that.next() == null && es == null)
-      return true;
-    else if (that.next() == null && es != null || that.next() != null && es == null)
-      return false;
-    else if (!that.next().equals(es))
-      return false;
-    else
-      return true;
-  }
+  void setNext(Node<T> ts) { this.ts = ts; }
 
   @Override
   public int hashCode() {
-    int result = 17;
-    result += e.hashCode();
-    Node<E> iter = es;
-    while(iter != null) {
-      result += iter.e.hashCode();
-      iter = iter.es;
+    int result = 42;
+    result += t.hashCode();
+    Node<T> next = ts;
+    while (next != null) {
+      result += next.data().hashCode();
+      next = next.next();
     }
     return result;
   }
 
   @Override
-  public String toString() {
-    if (this == null)
-      return "Node()";
-    else
-      return "Node(" + e.toString() + "," + ((es == null) ? "null" : es.toString()) + ")";
+  @SuppressWarnings("unchecked")
+  public boolean equals(Object obj) {
+    if (obj == null)
+      return false;
+    if (!(obj instanceof Node))
+      return false;
+    Node<Object> that = (Node<Object>) obj;
+    if (!t.equals(that.data()))
+      return false;
+    if (that.next() == null && ts == null)
+      return true;
+    if ((that.next() == null && ts != null) || (that.next() != null && ts == null))
+      return false;
+    return this.next().equals(that.next());
   }
+
+  @Override
+  public String toString() {
+    return "Node(" + t.toString() + "," + ((ts == null) ? "null" : ts.toString()) + ")";
+  }
+
+
+
 }
