@@ -17,13 +17,17 @@ public class MyLinkedListTest {
 
   MyLinkedList<Integer> list0;
   MyLinkedList<Integer> list1;
+  MyLinkedList<Integer> list4;
   MyLinkedList<Integer> list5;
+  MyLinkedList<Integer> duplicateOfList5;
 
   @Before
   public void setup() {
     list0 = new MyLinkedList<Integer>();
     list1 = new MyLinkedList<Integer>(1);
+    list4 = new MyLinkedList<Integer>(1,2,3,4);
     list5 = new MyLinkedList<Integer>(1,2,3,4,5);
+    duplicateOfList5 = new MyLinkedList<Integer>(1,2,3,4,5);
   }
 
   @Test
@@ -131,9 +135,30 @@ public class MyLinkedListTest {
         "but instead was " + actual.toString(), list5.equals(actual));
   }
 
+  @Test(expected = NullPointerException.class)
+  public void testRemoveNull() {
+    list5.remove(null);
+  }
+
+  @Test
+  public void testRemoveElementNotFound() {
+    boolean actual = list5.remove(101);
+    assertTrue("Failure - List(1,2,3,4,5).remove(101) should return false",
+        actual == false && list5.equals(duplicateOfList5));
+  }
+
+  @Test
+  public void testRemoveElementFound() {
+    boolean actual = list5.remove(5);
+    System.out.println("list5-modified: " + list5.toString());
+    System.out.println("list4: " + list4.toString());
+    assertTrue("Failure - List(1,2,3,4,5).remove(5) should return true and with a " +
+        "value of List(1,2,3,4), but instead was " + list5.toString(),
+        actual == true && list5.equals(list4));
+  }
+
   @Test
   public void TestEqualsTrue() {
-    MyLinkedList<Integer> duplicateOfList5 = new MyLinkedList<Integer>(1,2,3,4,5);
     assertTrue("Failure - List(1,2,3,4,5) and List(1,2,3,4,5) should be equal",
         list5.equals(duplicateOfList5));
   }

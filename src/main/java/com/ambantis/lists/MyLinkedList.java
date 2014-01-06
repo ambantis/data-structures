@@ -1,6 +1,7 @@
 package com.ambantis.lists;
 
 import java.lang.Class;
+import java.lang.ClassCastException;
 import java.lang.IllegalStateException;
 import java.lang.Iterable;
 import java.lang.NullPointerException;
@@ -274,6 +275,40 @@ public class MyLinkedList<E> implements Iterable<E> {
     return true;
   }
 
+
+  /**
+   * Removes a single instance of the specified element from this
+   * collection, if it is present (optional operation).  More formally,
+   * removes an element <tt>e</tt> such that
+   * <tt>(o==null&nbsp;?&nbsp;e==null&nbsp;:&nbsp;o.equals(e))</tt>, if
+   * this collection contains one or more such elements.  Returns
+   * <tt>true</tt> if this collection contained the specified element (or
+   * equivalently, if this collection changed as a result of the call).
+   *
+   * @param o element to be removed from this collection, if present
+   * @return <tt>true</tt> if an element was removed as a result of this call
+   * @throws NullPointerException if the specified element is null and this
+   *         collection does not permit null elements
+   *         (<a href="#optional-restrictions">optional</a>)
+   */
+  boolean remove(Object o) {
+    if (o == null)
+      throw new NullPointerException("this collection does not permit null elements");
+    E e;
+    for (Iterator<E> it = this.iterator(); it.hasNext(); ) {
+      e = it.next();
+      if (e.equals(o)) {
+        it.remove();
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+  // Bulk Operations
+
+  @Override
   public boolean equals(Object obj) {
     if (obj == null)
       return false;
