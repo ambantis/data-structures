@@ -6,6 +6,7 @@ import java.lang.IllegalStateException;
 import java.lang.Iterable;
 import java.lang.NullPointerException;
 import java.lang.StringBuilder;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -307,6 +308,31 @@ public class MyLinkedList<E> implements Iterable<E> {
 
 
   // Bulk Operations
+
+  /**
+   * Returns <tt>true</tt> if this collection contains all of the elements
+   * in the specified collection.
+   *
+   * @param  c collection to be checked for containment in this collection
+   * @return <tt>true</tt> if this collection contains all of the elements
+   *         in the specified collection
+   * @throws NullPointerException if the specified collection contains one
+   *         or more null elements and this collection does not permit null
+   *         elements
+   *         (<a href="#optional-restrictions">optional</a>),
+   *         or if the specified collection is null.
+   * @see    #contains(Object)
+   */
+  boolean containsAll(Collection<?> c) {
+    if (c == null)
+      throw new NullPointerException("this collection does not permit null elements");
+    for (Iterator<?> it = c.iterator(); it.hasNext(); ) {
+      Object elem = (Object) it.next();
+      if (!this.contains(elem))
+        return false;
+    }
+    return true;
+  } 
 
   @Override
   public boolean equals(Object obj) {

@@ -20,6 +20,8 @@ public class MyLinkedListTest {
   MyLinkedList<Integer> list4;
   MyLinkedList<Integer> list5;
   MyLinkedList<Integer> duplicateOfList5;
+  ArrayList<String> dwarves;
+  ArrayList<Integer> arrayList4;
 
   @Before
   public void setup() {
@@ -28,6 +30,19 @@ public class MyLinkedListTest {
     list4 = new MyLinkedList<Integer>(1,2,3,4);
     list5 = new MyLinkedList<Integer>(1,2,3,4,5);
     duplicateOfList5 = new MyLinkedList<Integer>(1,2,3,4,5);
+    dwarves = new ArrayList<String>(5);
+    dwarves.add("Doc");
+    dwarves.add("Grumpy");
+    dwarves.add("Happy");
+    dwarves.add("Sleepy");
+    dwarves.add("Bashful");
+    dwarves.add("Sneezy");
+    dwarves.add("Dopey");
+    arrayList4 = new ArrayList<Integer>(4);
+    arrayList4.add(1);
+    arrayList4.add(2);
+    arrayList4.add(3);
+    arrayList4.add(4);
   }
 
   @Test
@@ -150,18 +165,32 @@ public class MyLinkedListTest {
   @Test
   public void testRemoveElementFound() {
     boolean actual = list5.remove(5);
-    System.out.println("list5-modified: " + list5.toString());
-    System.out.println("list4: " + list4.toString());
     assertTrue("Failure - List(1,2,3,4,5).remove(5) should return true and with a " +
         "value of List(1,2,3,4), but instead was " + list5.toString(),
         actual == true && list5.equals(list4));
   }
 
   @Test
-  public void TestEqualsTrue() {
+  public void testEqualsTrue() {
     assertTrue("Failure - List(1,2,3,4,5) and List(1,2,3,4,5) should be equal",
         list5.equals(duplicateOfList5));
   }
 
+  @Test(expected = NullPointerException.class)
+  public void testContainsAll() {
+    list5.containsAll(null);
+  }
+
+  @Test
+  public void testContainsAllStrings() {
+    assertFalse("Failure - List(1,2,3,4,5) should not contain dwarves",
+        list5.containsAll(dwarves));
+  }
+
+  @Test
+  public void testContainsAllTrue() {
+    assertTrue("Failure - List(1,2,3,4,5) should contain all of List(1,2,3,4)",
+        list5.containsAll(arrayList4));
+  }
 
 }
