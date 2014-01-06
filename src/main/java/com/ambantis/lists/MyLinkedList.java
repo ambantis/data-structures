@@ -2,6 +2,8 @@ package com.ambantis.lists;
 
 import java.lang.IllegalStateException;
 import java.lang.Iterable;
+import java.lang.NullPointerException;
+import java.lang.StringBuilder;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -24,6 +26,56 @@ public class MyLinkedList<E> implements Iterable<E> {
       nodes[i] = new Node<E>(es[i], nodes[i+1]);
     }
     first = nodes[0];
+  }
+
+
+  // Query Operations
+
+  /**
+   * Returns the number of elements in this collection.  If this collection
+   * contains more than <tt>Integer.MAX_VALUE</tt> elements, returns
+   * <tt>Integer.MAX_VALUE</tt>.
+   *
+   * @return the number of elements in this collection
+   */
+  public int size() {
+    int size = 0;
+    for (E e : this)
+      size++;
+    return size;
+  }
+
+
+  /**
+   * Returns <tt>true</tt> if this collection contains no elements.
+   *
+   * @return <tt>true</tt> if this collection contains no elements
+   */
+  public boolean isEmpty() {
+    return first == null;
+  }
+
+
+  /**
+   * Returns <tt>true</tt> if this collection contains the specified element.
+   * More formally, returns <tt>true</tt> if and only if this collection
+   * contains at least one element <tt>e</tt> such that
+   * <tt>(o==null&nbsp;?&nbsp;e==null&nbsp;:&nbsp;o.equals(e))</tt>.
+   *
+   * @param o element whose presence in this collection is to be tested
+   * @return <tt>true</tt> if this collection contains the specified
+   *         element
+   * @throws NullPointerException if the specified element is null and this
+   *         collection does not permit null elements
+   *         (<a href="#optional-restrictions">optional</a>)
+   */
+  public boolean contains(Object o) {
+    if (o == null)
+      throw new NullPointerException("this collection does not permit null elements");
+    for (E e : this)
+      if (e.equals(o))
+        return true;
+    return false;
   }
 
   public Iterator<E> iterator() {
@@ -90,4 +142,59 @@ public class MyLinkedList<E> implements Iterable<E> {
       removeable = false;
     }
   }
+
+  /**
+   * Returns an array containing all of the elements in this collection.
+   * If this collection makes any guarantees as to what order its elements
+   * are returned by its iterator, this method must return the elements in
+   * the same order.
+   *
+   * <p>The returned array will be "safe" in that no references to it are
+   * maintained by this collection.  (In other words, this method must
+   * allocate a new array even if this collection is backed by an array).
+   * The caller is thus free to modify the returned array.
+   *
+   * <p>This method acts as bridge between array-based and collection-based
+   * APIs.
+   *
+   * @return an array containing all of the elements in this collection
+   */
+  Object[] toArray() {
+    if (this.isEmpty())
+      return new Object[0];
+    else {
+      int len = this.size();
+      Object[] es = new Object[this.size()];
+      {
+        int i = 0;
+        E e;
+        for (Iterator<E> it = this.iterator(); it.hasNext(); ) {
+          e = it.next();
+          es[i++] = (Object) e;
+        }
+      }
+      return es;
+    }
+  }
+
+  @Override
+  public String toString() {
+    String string = "List()";
+    if (!this.isEmpty()) {
+      Iterator<E> it = this.iterator();
+      E e = null;
+      StringBuilder sb = new StringBuilder(this.size());
+      sb.append("List(");
+      for (int i = 0, len = this.size(); i < len; i++) {
+        e = it.next();
+        sb.append(e.toString());
+        if (i < len-1)
+          sb.append(",");
+      }
+      sb.append(")");
+      string = sb.toString();
+    }
+    return string;
+  }
+
 }
