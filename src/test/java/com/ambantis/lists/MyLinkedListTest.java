@@ -116,12 +116,27 @@ public class MyLinkedListTest {
     list5.toArray(actual);
     assertArrayEquals("Failure - List(1,2,3,4,5).toArray() should be the same as " +
         "List(1,2,3,4,5).toArray(new Integer[5])", expected, actual);
-
-
   }
 
+  @Test(expected = NullPointerException.class)
+  public void testAddNull() {
+    list5.add(null);
+  }
 
+  @Test
+  public void testAddOne() {
+    MyLinkedList<Integer> actual = new MyLinkedList<Integer>(2,3,4,5);
+    actual.add(1);
+    assertTrue("Failure - List(2,3,4,5).add(1) should equal List(1,2,3,4,5) " +
+        "but instead was " + actual.toString(), list5.equals(actual));
+  }
 
+  @Test
+  public void TestEqualsTrue() {
+    MyLinkedList<Integer> duplicateOfList5 = new MyLinkedList<Integer>(1,2,3,4,5);
+    assertTrue("Failure - List(1,2,3,4,5) and List(1,2,3,4,5) should be equal",
+        list5.equals(duplicateOfList5));
+  }
 
 
 }

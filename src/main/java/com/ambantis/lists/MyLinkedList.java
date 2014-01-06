@@ -160,7 +160,7 @@ public class MyLinkedList<E> implements Iterable<E> {
    *
    * @return an array containing all of the elements in this collection
    */
-  Object[] toArray() {
+  public Object[] toArray() {
     if (this.isEmpty())
       return new Object[0];
     else {
@@ -221,7 +221,7 @@ public class MyLinkedList<E> implements Iterable<E> {
    * @throws NullPointerException if the specified array is null
    */
   @SuppressWarnings("unchecked")
-  <T> T[] toArray(T[] a) {
+  public <T> T[] toArray(T[] a) {
     if (a == null)
       throw new NullPointerException("argument array is null");
     int i = 0;
@@ -237,6 +237,66 @@ public class MyLinkedList<E> implements Iterable<E> {
     for (; i < a.length; i++)
       a[i] = null;
     return a;
+  }
+
+
+  // Modification Operations
+
+  /**
+   * Ensures that this collection contains the specified element (optional
+   * operation).  Returns <tt>true</tt> if this collection changed as a
+   * result of the call.  (Returns <tt>false</tt> if this collection does
+   * not permit duplicates and already contains the specified element.)<p>
+   *
+   * Collections that support this operation may place limitations on what
+   * elements may be added to this collection.  In particular, some
+   * collections will refuse to add <tt>null</tt> elements, and others will
+   * impose restrictions on the type of elements that may be added.
+   * Collection classes should clearly specify in their documentation any
+   * restrictions on what elements may be added.<p>
+   *
+   * If a collection refuses to add a particular element for any reason
+   * other than that it already contains the element, it <i>must</i> throw
+   * an exception (rather than returning <tt>false</tt>).  This preserves
+   * the invariant that a collection always contains the specified element
+   * after this call returns.
+   *
+   * @param e element whose presence in this collection is to be ensured
+   * @return <tt>true</tt> if this collection changed as a result of the
+   *         call
+   * @throws NullPointerException if the specified element is null and this
+   *         collection does not permit null elements
+   */
+  boolean add(E e) {
+    if (e == null)
+      throw new NullPointerException("this collection does not permit null elements");
+    first = new Node<E>(e, first);
+    return true;
+  }
+
+  public boolean equals(Object obj) {
+    if (obj == null)
+      return false;
+    if (!(obj instanceof MyLinkedList<?>))
+      return false;
+    // `that` must be of type MyLinkedList if we reach this point in the code
+    @SuppressWarnings("unchecked")
+    MyLinkedList<Object> that = (MyLinkedList<Object>) obj;
+    if (this.size() != that.size())
+      return false;
+    {
+      Iterator<E> itThis = this.iterator();
+      Iterator<Object> itThat = that.iterator();
+      E thing1;
+      Object thing2;
+      while (itThis.hasNext()) {
+        thing1 = itThis.next();
+        thing2 = itThat.next();
+        if (!thing1.equals(thing2))
+          return false;
+      }
+    }
+    return true;
   }
 
   @Override
