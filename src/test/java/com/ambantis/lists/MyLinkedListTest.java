@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.NullPointerException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.junit.Before;
@@ -82,16 +83,45 @@ public class MyLinkedListTest {
   @Test
   public void testToArray() {
     Object[] expected = {1,2,3,4,5};
-    System.out.println("list5 = " + list5.toString());
     Object[] actual = list5.toArray();
-    System.out.print("actual elements were: ");
-    for (Object o : actual) {
-      Integer element = (Integer) o;
-      System.out.print(element + " ");
-    }
-    System.out.println("");
-
-    assertArrayEquals("Failure - List(1,2,3,4,5).toArray() should be Object(1,2,3,4,5) " +
-        "but instead was " + actual.toString(), expected, list5.toArray());
+    assertArrayEquals("Failure - List(1,2,3,4,5).toArray() should be Object(1,2,3,4,5)",
+        expected, list5.toArray());
   }
+
+  @Test(expected = NullPointerException.class)
+  public void testToAnotherArrayNull() {
+    list5.toArray(null);
+  }
+
+  @Test(expected = ArrayStoreException.class)
+  public void testToAnotherArrayInvalidType() {
+    String[] strings = {"Doc", "Grumpy", "Happy", "Sleepy", "Bashful", "Sneezy", "Dopey"};
+    list5.toArray(strings);
+  }
+
+  @Test
+  public void testToAnotherArrayIntegerIntoNumber() {
+    Number[] expected = new Number[1];
+    expected[0] = (Number) 1;
+    Number[] actual = new Number[1];
+    list1.toArray(actual);
+    assertArrayEquals("Failure - List<Integer>(1).toArray() of type Number should " +
+        "be the same as the list cast to type Number[]", expected, actual);
+  }
+
+  @Test
+  public void testToAnotherArraySameTypeAndSize() {
+    Integer[] expected = {1,2,3,4,5};
+    Integer[] actual = new Integer[5];
+    list5.toArray(actual);
+    assertArrayEquals("Failure - List(1,2,3,4,5).toArray() should be the same as " +
+        "List(1,2,3,4,5).toArray(new Integer[5])", expected, actual);
+
+
+  }
+
+
+
+
+
 }
