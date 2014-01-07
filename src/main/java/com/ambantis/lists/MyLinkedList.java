@@ -381,21 +381,23 @@ public class MyLinkedList<E> implements Collection<E> {
    * @param c collection containing elements to be removed from this collection
    * @return <tt>true</tt> if this collection changed as a result of the
    *         call
-   * @throws UnsupportedOperationException if the <tt>removeAll</tt> method
-   *         is not supported by this collection
-   * @throws ClassCastException if the types of one or more elements
-   *         in this collection are incompatible with the specified
-   *         collection
-   *         (<a href="#optional-restrictions">optional</a>)
-   * @throws NullPointerException if this collection contains one or more
-   *         null elements and the specified collection does not support
-   *         null elements
-   *         (<a href="#optional-restrictions">optional</a>),
-   *         or if the specified collection is null
    * @see #remove(Object)
    * @see #contains(Object)
    */
-  public boolean removeAll(Collection<?> c) {return false;}
+  public boolean removeAll(Collection<?> c) {
+    boolean isChanged = false;
+    if (c == null)
+      return isChanged;
+    E elem;
+    for (Iterator<E> it = this.iterator(); it.hasNext(); ) {
+      elem = it.next();
+      if (c.contains(elem)) {
+        it.remove();
+        isChanged = true;
+      }
+    }
+    return isChanged;
+  }
 
   /**
    * Retains only the elements in this collection that are contained in the
@@ -419,7 +421,20 @@ public class MyLinkedList<E> implements Collection<E> {
    * @see #remove(Object)
    * @see #contains(Object)
    */
-  public boolean retainAll(Collection<?> c) {return false;}
+  public boolean retainAll(Collection<?> c) {
+    boolean isChanged = false;
+    if (c == null)
+      throw new NullPointerException("the provided collection is null");
+    E elem;
+    for (Iterator<E> it = this.iterator(); it.hasNext(); ) {
+      elem = it.next();
+      if (!c.contains(elem)) {
+        it.remove();
+        isChanged = true;
+      }
+    }
+    return isChanged;
+  }
 
   /**
    * Removes all of the elements from this collection (optional operation).
@@ -428,7 +443,9 @@ public class MyLinkedList<E> implements Collection<E> {
    * @throws UnsupportedOperationException if the <tt>clear</tt> operation
    *         is not supported by this collection
    */
-  public void clear() {}
+  public void clear() {
+    first = null;
+  }
 
 
   @Override

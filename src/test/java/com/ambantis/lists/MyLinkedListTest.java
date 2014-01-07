@@ -215,6 +215,52 @@ public class MyLinkedListTest {
   }
 
   @Test
+  public void testRemoveAllNull() {
+    boolean result = list5.removeAll(null);
+    assertTrue("Failure - List(1,2,3,4,5).removeAll(null)) should return false and an " +
+        "unchanged list", result == false && list5.equals(duplicateOfList5));
+  }
+
+  @Test
+  public void testRemoveAllInvalid() {
+    MyLinkedList<String> dwarvesList = new MyLinkedList<String>();
+    dwarvesList.addAll(dwarves);
+    boolean result = list5.removeAll(dwarvesList);
+    assertTrue("Failure - List(1,2,3,4,5).removeAll(dwarvesList)) should return false and an " +
+        "unchanged list", result == false && list5.equals(duplicateOfList5));
+  }
+
+  @Test
+  public void testRemoveAllValid() {
+    boolean result = list5.removeAll(list4);
+    assertTrue("Failure - List(1,2,3,4,5).removeAll(List(1,2,3,4)) should return true " +
+        "and it should now be List(5)", result == true && list5.equals(list1));
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testRetainAllNull() {
+    list5.retainAll(null);
+  }
+
+  @Test
+  public void testRetainAllDifferentCollectionType() {
+    MyLinkedList<String> dwarvesList = new MyLinkedList<String>();
+    dwarvesList.addAll(dwarves);
+    boolean result = list5.retainAll(dwarvesList);
+    assertTrue("Failure - List(1,2,3,4,5).retainAll(dwarvesList) should return true " +
+        "and it should be an empty list", result == true && list5.isEmpty());
+  }
+
+  @Test
+  public void testRetainAllSimilarCollection() {
+    boolean result = list5.retainAll(list4);
+    assertTrue("Failure - List(1,2,3,4,5).retainAll(List(1,2,3,4)) should have a return " +
+        "value of `true` and it should equal List(1,2,3,4",
+        result == true && list5.equals(list4));
+  }
+
+
+  @Test
   public void testEqualsTrue() {
     assertTrue("Failure - List(1,2,3,4,5) and List(1,2,3,4,5) should be equal",
         list5.equals(duplicateOfList5));
