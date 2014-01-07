@@ -449,6 +449,17 @@ public class MyLinkedList<E> implements Collection<E> {
 
 
   @Override
+  public int hashCode() {
+    int result = 42;
+    Integer i = 17;
+    for (E e : this) {
+      result += (e.hashCode() * i.hashCode());
+      i++;
+    }
+    return result;
+  }
+
+  @Override
   public boolean equals(Object obj) {
     if (obj == null)
       return false;

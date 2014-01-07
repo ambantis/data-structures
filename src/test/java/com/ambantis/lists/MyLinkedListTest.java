@@ -21,6 +21,7 @@ public class MyLinkedListTest {
   MyLinkedList<Integer> list4;
   MyLinkedList<Integer> list5;
   MyLinkedList<Integer> duplicateOfList5;
+  MyLinkedList<Integer> reverseOfList5;
   ArrayList<String> dwarves;
   ArrayList<Integer> arrayList4;
 
@@ -31,6 +32,7 @@ public class MyLinkedListTest {
     list4 = new MyLinkedList<Integer>(1,2,3,4);
     list5 = new MyLinkedList<Integer>(1,2,3,4,5);
     duplicateOfList5 = new MyLinkedList<Integer>(1,2,3,4,5);
+    reverseOfList5 = new MyLinkedList<Integer>(5,4,3,2,1);
     dwarves = new ArrayList<String>(5);
     dwarves.add("Doc");
     dwarves.add("Grumpy");
@@ -259,6 +261,17 @@ public class MyLinkedListTest {
         result == true && list5.equals(list4));
   }
 
+  @Test
+  public void testHashCodeListWithReverse() {
+    assertFalse("Failure - List(1,2,3,4,5) and List(5,4,3,2,1) should not have the same " +
+        "hashCode", list5.hashCode() == reverseOfList5.hashCode());
+  }
+
+  @Test
+  public void testHashCodeWithDuplicate() {
+    assertTrue("Failure - List(1,2,3,4,5) and List(1,2,3,4,5) should have the same " +
+        "hashCode", list5.hashCode() == duplicateOfList5.hashCode());
+  }
 
   @Test
   public void testEqualsTrue() {
@@ -266,6 +279,10 @@ public class MyLinkedListTest {
         list5.equals(duplicateOfList5));
   }
 
-
+  @Test
+  public void testNotSame() {
+    assertFalse("Failure - List(1,2,3,4,5) and List(1,2,3,4) should not be equal",
+        list5.equals(list4));
+  }
 
 }
