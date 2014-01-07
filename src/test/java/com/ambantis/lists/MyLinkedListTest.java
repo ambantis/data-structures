@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.NullPointerException;
+import java.lang.IllegalArgumentException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -26,7 +27,7 @@ public class MyLinkedListTest {
   @Before
   public void setup() {
     list0 = new MyLinkedList<Integer>();
-    list1 = new MyLinkedList<Integer>(1);
+    list1 = new MyLinkedList<Integer>(5);
     list4 = new MyLinkedList<Integer>(1,2,3,4);
     list5 = new MyLinkedList<Integer>(1,2,3,4,5);
     duplicateOfList5 = new MyLinkedList<Integer>(1,2,3,4,5);
@@ -121,10 +122,10 @@ public class MyLinkedListTest {
   @Test
   public void testToAnotherArrayIntegerIntoNumber() {
     Number[] expected = new Number[1];
-    expected[0] = (Number) 1;
+    expected[0] = (Number) 5;
     Number[] actual = new Number[1];
     list1.toArray(actual);
-    assertArrayEquals("Failure - List<Integer>(1).toArray() of type Number should " +
+    assertArrayEquals("Failure - List<Integer>(5).toArray() of type Number should " +
         "be the same as the list cast to type Number[]", expected, actual);
   }
 
@@ -170,12 +171,6 @@ public class MyLinkedListTest {
         actual == true && list5.equals(list4));
   }
 
-  @Test
-  public void testEqualsTrue() {
-    assertTrue("Failure - List(1,2,3,4,5) and List(1,2,3,4,5) should be equal",
-        list5.equals(duplicateOfList5));
-  }
-
   @Test(expected = NullPointerException.class)
   public void testContainsAll() {
     list5.containsAll(null);
@@ -192,5 +187,39 @@ public class MyLinkedListTest {
     assertTrue("Failure - List(1,2,3,4,5) should contain all of List(1,2,3,4)",
         list5.containsAll(arrayList4));
   }
+
+  @Test(expected = NullPointerException.class)
+  public void testAddAllNull() {
+    list5.addAll(null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testAddAllToItself() {
+    list5.addAll(list5);
+  }
+
+  @Test
+  public void testAddAllEmpty() {
+    boolean actual = list5.addAll(list0);
+    assertFalse("Failure - List(1,2,3,4,5).addAll(List()) should result in unchanged " +
+        "list", actual);
+  }
+
+  @Test
+  public void testAddAllValid() {
+    boolean actual = list1.addAll(arrayList4);
+    boolean hasSameElements = list5.containsAll(list1);
+    boolean isSameSize = list5.size() == list1.size();
+    assertTrue("Failure - List(5).addAll(List(1,2,3,4) should be the same elements and " +
+        "size as list5", actual == true && hasSameElements && isSameSize);
+  }
+
+  @Test
+  public void testEqualsTrue() {
+    assertTrue("Failure - List(1,2,3,4,5) and List(1,2,3,4,5) should be equal",
+        list5.equals(duplicateOfList5));
+  }
+
+
 
 }

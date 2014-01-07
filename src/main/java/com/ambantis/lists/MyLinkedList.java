@@ -3,14 +3,13 @@ package com.ambantis.lists;
 import java.lang.Class;
 import java.lang.ClassCastException;
 import java.lang.IllegalStateException;
-import java.lang.Iterable;
 import java.lang.NullPointerException;
 import java.lang.StringBuilder;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class MyLinkedList<E> implements Iterable<E> {
+public class MyLinkedList<E> implements Collection<E> {
   private Node<E> first;
 
   public MyLinkedList() {}
@@ -269,7 +268,7 @@ public class MyLinkedList<E> implements Iterable<E> {
    * @throws NullPointerException if the specified element is null and this
    *         collection does not permit null elements
    */
-  boolean add(E e) {
+  public boolean add(E e) {
     if (e == null)
       throw new NullPointerException("this collection does not permit null elements");
     first = new Node<E>(e, first);
@@ -292,7 +291,7 @@ public class MyLinkedList<E> implements Iterable<E> {
    *         collection does not permit null elements
    *         (<a href="#optional-restrictions">optional</a>)
    */
-  boolean remove(Object o) {
+  public boolean remove(Object o) {
     if (o == null)
       throw new NullPointerException("this collection does not permit null elements");
     E e;
@@ -323,7 +322,7 @@ public class MyLinkedList<E> implements Iterable<E> {
    *         or if the specified collection is null.
    * @see    #contains(Object)
    */
-  boolean containsAll(Collection<?> c) {
+  public boolean containsAll(Collection<?> c) {
     if (c == null)
       throw new NullPointerException("this collection does not permit null elements");
     for (Iterator<?> it = c.iterator(); it.hasNext(); ) {
@@ -332,7 +331,105 @@ public class MyLinkedList<E> implements Iterable<E> {
         return false;
     }
     return true;
-  } 
+  }
+
+  /**
+   * Adds all of the elements in the specified collection to this collection
+   * (optional operation).  The behavior of this operation is undefined if
+   * the specified collection is modified while the operation is in progress.
+   * (This implies that the behavior of this call is undefined if the
+   * specified collection is this collection, and this collection is
+   * nonempty.)
+   *
+   * @param c collection containing elements to be added to this collection
+   * @return <tt>true</tt> if this collection changed as a result of the call
+   * @throws UnsupportedOperationException if the <tt>addAll</tt> operation
+   *         is not supported by this collection
+   * @throws ClassCastException if the class of an element of the specified
+   *         collection prevents it from being added to this collection
+   * @throws NullPointerException if the specified collection contains a
+   *         null element and this collection does not permit null elements,
+   *         or if the specified collection is null
+   * @throws IllegalArgumentException if some property of an element of the
+   *         specified collection prevents it from being added to this
+   *         collection
+   * @throws IllegalStateException if not all the elements can be added at
+   *         this time due to insertion restrictions
+   * @see #add(Object)
+   */
+  public boolean addAll(Collection<? extends E> c) {
+    boolean isChanged = false;
+    if (c == null)
+      throw new NullPointerException("this collection does not permit null elements");
+    if ( ((Object)this).equals((Object) c) )
+      throw new IllegalArgumentException("this collection cannot be added to itself");
+    for (E elem : c) {
+      if (elem == null)
+        throw new NullPointerException("this collection does not permit null elements");
+      this.add(elem);
+      isChanged = true;
+    }
+    return isChanged;
+  }
+
+  /**
+   * Removes all of this collection's elements that are also contained in the
+   * specified collection (optional operation).  After this call returns,
+   * this collection will contain no elements in common with the specified
+   * collection.
+   *
+   * @param c collection containing elements to be removed from this collection
+   * @return <tt>true</tt> if this collection changed as a result of the
+   *         call
+   * @throws UnsupportedOperationException if the <tt>removeAll</tt> method
+   *         is not supported by this collection
+   * @throws ClassCastException if the types of one or more elements
+   *         in this collection are incompatible with the specified
+   *         collection
+   *         (<a href="#optional-restrictions">optional</a>)
+   * @throws NullPointerException if this collection contains one or more
+   *         null elements and the specified collection does not support
+   *         null elements
+   *         (<a href="#optional-restrictions">optional</a>),
+   *         or if the specified collection is null
+   * @see #remove(Object)
+   * @see #contains(Object)
+   */
+  public boolean removeAll(Collection<?> c) {return false;}
+
+  /**
+   * Retains only the elements in this collection that are contained in the
+   * specified collection (optional operation).  In other words, removes from
+   * this collection all of its elements that are not contained in the
+   * specified collection.
+   *
+   * @param c collection containing elements to be retained in this collection
+   * @return <tt>true</tt> if this collection changed as a result of the call
+   * @throws UnsupportedOperationException if the <tt>retainAll</tt> operation
+   *         is not supported by this collection
+   * @throws ClassCastException if the types of one or more elements
+   *         in this collection are incompatible with the specified
+   *         collection
+   *         (<a href="#optional-restrictions">optional</a>)
+   * @throws NullPointerException if this collection contains one or more
+   *         null elements and the specified collection does not permit null
+   *         elements
+   *         (<a href="#optional-restrictions">optional</a>),
+   *         or if the specified collection is null
+   * @see #remove(Object)
+   * @see #contains(Object)
+   */
+  public boolean retainAll(Collection<?> c) {return false;}
+
+  /**
+   * Removes all of the elements from this collection (optional operation).
+   * The collection will be empty after this method returns.
+   *
+   * @throws UnsupportedOperationException if the <tt>clear</tt> operation
+   *         is not supported by this collection
+   */
+  public void clear() {}
+
 
   @Override
   public boolean equals(Object obj) {
