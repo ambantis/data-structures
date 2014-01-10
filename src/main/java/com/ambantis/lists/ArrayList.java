@@ -74,7 +74,7 @@ public class ArrayList<E> implements Iterable<E> {
      * @throws NoSuchElementException if the iteration has no next element
      */
     public E next() {
-      throw new UnsupportedOperationException("This feature has not yet been implemented");
+      return itArray[itPos++];
     }
 
     /**
@@ -87,7 +87,7 @@ public class ArrayList<E> implements Iterable<E> {
      *         traversing the list in the reverse direction
      */
     public boolean hasPrevious() {
-      throw new UnsupportedOperationException("This feature has not yet been implemented");
+      return itPos > 0;
     }
 
     /**

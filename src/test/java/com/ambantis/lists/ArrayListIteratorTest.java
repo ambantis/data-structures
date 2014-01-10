@@ -3,18 +3,25 @@ package com.ambantis.lists;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Iterator;
+import java.util.ListIterator;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.junit.runners.MethodSorters;
 import org.junit.Test;
 
 @RunWith(JUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ArrayListIteratorTest {
 
   ArrayList<Integer> listEmptyInts;
   ArrayList<Integer> listTwoInts;
   ArrayList<Integer> listFiveInts;
+
+  ListIterator<Integer> it0;
+  ListIterator<Integer> it2;
+  ListIterator<Integer> it5;
 
   @Before
   public void setup() {
@@ -33,19 +40,32 @@ public class ArrayListIteratorTest {
 
   @Test
   public void testArrayListIteratorHasNext1() {
-    Iterator<Integer> it = listEmptyInts.iterator();
+    it0 = listEmptyInts.iterator();
     assertFalse("Failure - List(1,2).iterator() should not have next after two calls to next()",
-        it.hasNext());
+        it0.hasNext());
   }
 
   @Test
   public void testArrayListIteratorNext() {
-    assertTrue("Failure - not implemented", false);
+    it2 = listTwoInts.iterator();
+    it2.next();
+    int expected = 2;
+    int actual = it2.next();
+    assertTrue("Failure - List(1,2).iterator() should have a value of `2` when called the second time",
+        expected == actual);
   }
 
   @Test
-  public void testArrayListIteratorHasPrevious() {
-    assertTrue("Failure - not implemented", false);
+  public void testArrayListIteratorHasPreviousTrue() {
+    it2 = listTwoInts.iterator();
+    it2.next();
+    assertTrue("Failure - List(1,2).iterator().next().hasPrevious should be true", it2.hasPrevious());
+  }
+
+  @Test
+  public void testArrayListIteratorHasPreviousFalse() {
+    it0 = listEmptyInts.iterator();
+    assertFalse("Failure - List().iterator().hasPrevious should be false", it0.hasPrevious());
   }
 
   @Test
