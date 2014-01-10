@@ -1,5 +1,7 @@
 package com.ambantis.lists;
 
+import java.lang.IllegalStateException;
+import java.lang.Integer;
 import java.lang.Object;
 import java.lang.UnsupportedOperationException;
 import java.util.ListIterator;
@@ -35,6 +37,7 @@ public class ArrayList<E> implements Iterable<E> {
   private class Itr implements ListIterator<E> {
 
     private E[] itArray;
+    private int itPos;
 
     // only objects of type <E> will go into array
     @SuppressWarnings("unchecked")
@@ -42,15 +45,10 @@ public class ArrayList<E> implements Iterable<E> {
       itArray = (E[]) new Object[capacity];
       for (int i = 0; i < es.length; i++)
         itArray[i] = es[i];
+      itPos = 0;
     }
 
-
-
-
-
-
-
-    // Query Operations
+    // Iterator Query Operations
 
     /**
      * Returns {@code true} if this list iterator has more elements when
@@ -62,7 +60,7 @@ public class ArrayList<E> implements Iterable<E> {
      *         traversing the list in the forward direction
      */
     public boolean hasNext() {
-      throw new UnsupportedOperationException("This feature has not yet been implemented");
+      return itPos < size;
     }
 
     /**
@@ -221,6 +219,8 @@ public class ArrayList<E> implements Iterable<E> {
    * @throws IllegalStateException         {@inheritDoc}
    */
   public boolean add(E e) {
+    if (size == Integer.MAX_VALUE)
+      throw new IllegalStateException("Error - this collection is already at maximum capacity");
     es[size++] = e;
     return true;
   }
