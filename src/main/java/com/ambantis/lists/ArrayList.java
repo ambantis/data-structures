@@ -1,22 +1,33 @@
 package com.ambantis.lists;
 
+import java.lang.Object;
 import java.lang.UnsupportedOperationException;
 import java.util.ListIterator;
 
 public class ArrayList<E> implements Iterable<E> {
 
-  private E[] array;
+  private E[] es;
   private static final int DEFAULT_CAPACITY = 20;
   private int capacity;
+  private int size;
 
+  // Cast needed to initialize array as type <E>
+  @SuppressWarnings("unchecked")
   public ArrayList(int initialCapacity) {
-    array = (E[]) new Object[initialCapacity];
+    es = (E[]) new Object[initialCapacity];
+    capacity = initialCapacity;
+    size = 0;
   }
 
   public ArrayList() {
     this(DEFAULT_CAPACITY);
   }
 
+  /**
+   * Returns an iterator over the elements contained in this collection.
+   *
+   * @return an iterator over the elements contained in this collection
+   */
   public ListIterator<E> iterator() {
     return new Itr();
   }
@@ -25,11 +36,19 @@ public class ArrayList<E> implements Iterable<E> {
 
     private E[] itArray;
 
+    // only objects of type <E> will go into array
+    @SuppressWarnings("unchecked")
     private Itr() {
       itArray = (E[]) new Object[capacity];
-      for (int i = 0; i < array.length; i++)
-        itArray[i] = array[i];
+      for (int i = 0; i < es.length; i++)
+        itArray[i] = es[i];
     }
+
+
+
+
+
+
 
     // Query Operations
 
@@ -184,6 +203,29 @@ public class ArrayList<E> implements Iterable<E> {
       throw new UnsupportedOperationException("This feature has not yet been implemented");
     }
   }
+
+  public int size() {
+    return size;
+  }
+
+
+  // Modification Operations
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>This implementation always throws an
+   * <tt>UnsupportedOperationException</tt>.
+   *
+   * @throws ClassCastException            {@inheritDoc}
+   * @throws IllegalStateException         {@inheritDoc}
+   */
+  public boolean add(E e) {
+    es[size++] = e;
+    return true;
+  }
+
+
 
 
 }

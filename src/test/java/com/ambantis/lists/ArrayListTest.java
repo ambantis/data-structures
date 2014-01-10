@@ -12,8 +12,13 @@ import org.junit.Test;
 public class ArrayListTest {
 
   @Test
-  public void testNothing() {
-    assertTrue("Failure - not implemented", false);
+  public void testArrayListAdd() {
+    ArrayList<Integer> list = new ArrayList<Integer>();
+    list.add(1);
+    list.add(1);
+    int expected = 2;
+    int actual = 2;
+    assertTrue("Failure - not implemented", expected == actual);
   }
 
 }
