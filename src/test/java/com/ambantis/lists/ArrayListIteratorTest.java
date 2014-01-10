@@ -12,7 +12,43 @@ import org.junit.Test;
 public class ArrayListIteratorTest {
 
   @Test
-  public void thisTestAlwaysFails() {
+  public void testArrayListIteratorHasNext() {
     assertTrue("Failure - not implemented", false);
   }
+
+  @Test
+  public void testArrayListIteratorNext() {
+    assertTrue("Failure - not implemented", false);
+  }
+
+  @Test
+  public void testArrayListIteratorHasPrevious() {
+    assertTrue("Failure - not implemented", false);
+  }
+
+  @Test
+  public void testArrayListIteratorNextIndex() {
+    assertTrue("Failure - not implemented", false);
+  }
+
+  @Test
+  public void testArrayListIteratorPreviousIndex() {
+    assertTrue("Failure - not implemented", false);
+  }
+
+  @Test
+  public void testArrayListIteratorRemove() {
+    assertTrue("Failure - not implemented", false);
+  }
+
+  @Test
+  public void testArrayListIteratorSet() {
+    assertTrue("Failure - not implemented", false);
+  }
+
+  @Test
+  public void testArrayListIteratorAdd() {
+    assertTrue("Failure - not implemented", false);
+  }
+
 }
