@@ -46,7 +46,7 @@ public class ArrayList<E> implements Iterable<E> {
       itArray = (E[]) new Object[capacity];
       for (int i = 0; i < es.length; i++)
         itArray[i] = es[i];
-      itPos = 0;
+      itPos = -1;
     }
 
     // Iterator Query Operations
@@ -61,7 +61,7 @@ public class ArrayList<E> implements Iterable<E> {
      *         traversing the list in the forward direction
      */
     public boolean hasNext() {
-      return itPos < size;
+      return (itPos + 1) < size;
     }
 
     /**
@@ -75,10 +75,9 @@ public class ArrayList<E> implements Iterable<E> {
      * @throws NoSuchElementException if the iteration has no next element
      */
     public E next() {
-      if (itPos >= size) {
+      if (!hasNext())
         throw new NoSuchElementException("the collection has no next element");
-      }
-      return itArray[itPos++];
+      return itArray[++itPos];
     }
 
     /**
@@ -91,7 +90,7 @@ public class ArrayList<E> implements Iterable<E> {
      *         traversing the list in the reverse direction
      */
     public boolean hasPrevious() {
-      return itPos > 0;
+      return itPos > -1;
     }
 
     /**
@@ -107,7 +106,10 @@ public class ArrayList<E> implements Iterable<E> {
      *         element
      */
     public E previous() {
-      throw new UnsupportedOperationException("This feature has not yet been implemented");
+      if (!hasPrevious())
+        throw new NoSuchElementException("the collection has no previous element");
+      System.out.println("call to previous(), itPos = " + itPos);
+      return itArray[itPos--];
     }
 
     /**
