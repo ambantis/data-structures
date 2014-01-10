@@ -4,16 +4,22 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.junit.runners.MethodSorters;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 @RunWith(JUnit4.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ArrayListIteratorTest {
+
+  @Rule
+  public ExpectedException thrown = ExpectedException.none();
 
   ArrayList<Integer> listEmptyInts;
   ArrayList<Integer> listTwoInts;
@@ -53,6 +59,16 @@ public class ArrayListIteratorTest {
     int actual = it2.next();
     assertTrue("Failure - List(1,2).iterator() should have a value of `2` when called the second time",
         expected == actual);
+  }
+
+  @Test
+  public void testArrayListIteratorNextThrowsException() {
+    it2 = listTwoInts.iterator();
+    it2.next();
+    it2.next();
+    it2.next();
+    thrown.expect(NoSuchElementException.class);
+    thrown.expectMessage("the collection has no next element");
   }
 
   @Test

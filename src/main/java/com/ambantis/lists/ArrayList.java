@@ -5,6 +5,7 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.UnsupportedOperationException;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 public class ArrayList<E> implements Iterable<E> {
 
@@ -74,6 +75,9 @@ public class ArrayList<E> implements Iterable<E> {
      * @throws NoSuchElementException if the iteration has no next element
      */
     public E next() {
+      if (itPos >= size) {
+        throw new NoSuchElementException("the collection has no next element");
+      }
       return itArray[itPos++];
     }
 
