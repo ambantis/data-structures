@@ -39,6 +39,8 @@ public class ArrayList<E> implements Iterable<E> {
 
     private E[] itArray;
     private int nextPos;
+    boolean nextRemovable;
+    boolean prevRemovable;
 
     // only objects of type <E> will go into array
     @SuppressWarnings("unchecked")
@@ -47,6 +49,8 @@ public class ArrayList<E> implements Iterable<E> {
       for (int i = 0; i < es.length; i++)
         itArray[i] = es[i];
       nextPos = 0;
+      nextRemovable = false;
+      prevRemovable = false;
     }
 
     // Iterator Query Operations
@@ -77,6 +81,7 @@ public class ArrayList<E> implements Iterable<E> {
     public E next() {
       if (!hasNext())
         throw new NoSuchElementException("the collection has no next element");
+      nextRemovable = true;
       return itArray[nextPos++];
     }
 
@@ -108,7 +113,7 @@ public class ArrayList<E> implements Iterable<E> {
     public E previous() {
       if (!hasPrevious())
         throw new NoSuchElementException("the collection has no previous element");
-      System.out.println("call to previous(), itPos = " + nextPos);
+      prevRemovable = true;
       return itArray[--nextPos-1];
     }
 
@@ -155,7 +160,15 @@ public class ArrayList<E> implements Iterable<E> {
      *         {@code next} or {@code previous}
      */
     public void remove() {
-      throw new UnsupportedOperationException("This feature has not yet been implemented");
+      if (!nextRemovable)
+        throw new IllegalStateException("remove can only be called once per call to next()");
+      int i = nextPos-1;
+      for (; i < itArray.length-1; i++) {
+        itArray[i] = itArray[i+1];
+      }
+      itArray[i] = null;
+      nextPos--;
+      nextRemovable = false;
     }
 
     /**
@@ -179,7 +192,8 @@ public class ArrayList<E> implements Iterable<E> {
      *         {@code next} or {@code previous}
      */
     public void set(E e) {
-      throw new UnsupportedOperationException("This feature has not yet been implemented");
+      //todo:ambantis:how should we test for add or remove?
+      itArray[nextPos-1] = e;
     }
 
     /**
@@ -205,6 +219,7 @@ public class ArrayList<E> implements Iterable<E> {
     public void add(E e) {
       throw new UnsupportedOperationException("This feature has not yet been implemented");
     }
+
   }
 
   public int size() {
