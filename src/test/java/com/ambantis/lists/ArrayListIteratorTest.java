@@ -78,14 +78,16 @@ public class ArrayListIteratorTest {
   @Test
   public void testArrayListIteratorPreviousTrue() {
     ListIterator<Integer> it2 = listTwoInts.iterator();
-    it2.next();
-    it2.next();
+    int first = it2.next();
+    System.out.println("first = " + first);
+    int second = it2.next();
+    System.out.println("second = " + second);
     int expected = 1;
     int actual = it2.previous();
+    System.out.println("previous = " + actual);
     assertTrue("Failure - List(1,2).iterator().next().next().previous() should be 1 " +
         "but instead was " + actual, expected == actual);
   }
-
 
   @Test(expected = NoSuchElementException.class)
   public void testArrayListIteratorPreviousFalse() {

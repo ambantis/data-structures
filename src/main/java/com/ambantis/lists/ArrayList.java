@@ -38,7 +38,7 @@ public class ArrayList<E> implements Iterable<E> {
   private class Itr implements ListIterator<E> {
 
     private E[] itArray;
-    private int itPos;
+    private int nextPos;
 
     // only objects of type <E> will go into array
     @SuppressWarnings("unchecked")
@@ -46,7 +46,7 @@ public class ArrayList<E> implements Iterable<E> {
       itArray = (E[]) new Object[capacity];
       for (int i = 0; i < es.length; i++)
         itArray[i] = es[i];
-      itPos = -1;
+      nextPos = 0;
     }
 
     // Iterator Query Operations
@@ -61,7 +61,7 @@ public class ArrayList<E> implements Iterable<E> {
      *         traversing the list in the forward direction
      */
     public boolean hasNext() {
-      return (itPos + 1) < size;
+      return nextPos < size;
     }
 
     /**
@@ -77,7 +77,7 @@ public class ArrayList<E> implements Iterable<E> {
     public E next() {
       if (!hasNext())
         throw new NoSuchElementException("the collection has no next element");
-      return itArray[++itPos];
+      return itArray[nextPos++];
     }
 
     /**
@@ -90,7 +90,7 @@ public class ArrayList<E> implements Iterable<E> {
      *         traversing the list in the reverse direction
      */
     public boolean hasPrevious() {
-      return itPos > -1;
+      return (nextPos-1) > 0;
     }
 
     /**
@@ -108,8 +108,8 @@ public class ArrayList<E> implements Iterable<E> {
     public E previous() {
       if (!hasPrevious())
         throw new NoSuchElementException("the collection has no previous element");
-      System.out.println("call to previous(), itPos = " + itPos);
-      return itArray[itPos--];
+      System.out.println("call to previous(), itPos = " + nextPos);
+      return itArray[--nextPos-1];
     }
 
     /**
