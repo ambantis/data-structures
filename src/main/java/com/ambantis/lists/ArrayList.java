@@ -122,7 +122,7 @@ public class ArrayList<E> implements Iterable<E> {
      *         iterator is at the end of the list
      */
     public int nextIndex() {
-      throw new UnsupportedOperationException("This feature has not yet been implemented");
+      return (size < nextPos) ? size : nextPos;
     }
 
     /**
@@ -135,9 +135,8 @@ public class ArrayList<E> implements Iterable<E> {
      *         iterator is at the beginning of the list
      */
     public int previousIndex() {
-      throw new UnsupportedOperationException("This feature has not yet been implemented");
+      return (nextPos < 2) ? -1 : nextPos - 2;
     }
-
 
     // Modification Operations
 

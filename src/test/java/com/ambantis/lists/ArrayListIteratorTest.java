@@ -65,8 +65,9 @@ public class ArrayListIteratorTest {
   public void testArrayListIteratorHasPreviousTrue() {
     ListIterator<Integer> it2 = listTwoInts.iterator();
     it2.next();
+    it2.next();
     boolean expected = it2.hasPrevious();
-    assertTrue("Failure - List(1,2).iterator().next().hasPrevious should be true", expected);
+    assertTrue("Failure - List(1,2).iterator().next()next().hasPrevious() should be true", expected);
   }
 
   @Test
@@ -100,12 +101,23 @@ public class ArrayListIteratorTest {
 
   @Test
   public void testArrayListIteratorNextIndex() {
-    assertTrue("Failure - not implemented", false);
+    ListIterator<Integer> it2 = listTwoInts.iterator();
+    it2.next();
+    int expected = 1;
+    int actual = it2.nextIndex();
+    assertTrue("Failure - List(1,2).iterator().next().nextIndex() should yield 1 " +
+        "but instead was " + actual, expected == actual);
   }
 
   @Test
   public void testArrayListIteratorPreviousIndex() {
-    assertTrue("Failure - not implemented", false);
+    ListIterator<Integer> it2 = listTwoInts.iterator();
+    it2.next();
+    it2.next();
+    int expected = 0;
+    int actual = it2.previousIndex();
+    assertTrue("Failure - List(1,2).iterator().next().next().previousIndex() should " +
+        "yield 0 but instead was " + actual, expected == actual);
   }
 
   @Test
