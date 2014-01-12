@@ -3,6 +3,7 @@ package com.ambantis.lists;
 import java.lang.IllegalStateException;
 import java.lang.Integer;
 import java.lang.Object;
+import java.lang.StringBuilder;
 import java.lang.UnsupportedOperationException;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
@@ -39,8 +40,7 @@ public class ArrayList<E> implements Iterable<E> {
 
     private E[] itArray;
     private int nextPos;
-    boolean nextRemovable;
-    boolean prevRemovable;
+    private int lastPos;
 
     // only objects of type <E> will go into array
     @SuppressWarnings("unchecked")
@@ -49,8 +49,7 @@ public class ArrayList<E> implements Iterable<E> {
       for (int i = 0; i < es.length; i++)
         itArray[i] = es[i];
       nextPos = 0;
-      nextRemovable = false;
-      prevRemovable = false;
+      lastPos = -1;
     }
 
     // Iterator Query Operations
@@ -81,8 +80,9 @@ public class ArrayList<E> implements Iterable<E> {
     public E next() {
       if (!hasNext())
         throw new NoSuchElementException("the collection has no next element");
-      nextRemovable = true;
-      return itArray[nextPos++];
+      lastPos = nextPos;
+      nextPos++;
+      return itArray[lastPos];
     }
 
     /**
@@ -113,8 +113,9 @@ public class ArrayList<E> implements Iterable<E> {
     public E previous() {
       if (!hasPrevious())
         throw new NoSuchElementException("the collection has no previous element");
-      prevRemovable = true;
-      return itArray[--nextPos-1];
+      lastPos = nextPos-2;
+      nextPos--;
+      return itArray[lastPos];
     }
 
     /**
@@ -160,15 +161,13 @@ public class ArrayList<E> implements Iterable<E> {
      *         {@code next} or {@code previous}
      */
     public void remove() {
-      if (!nextRemovable)
+      if (lastPos < 0)
         throw new IllegalStateException("remove can only be called once per call to next()");
-      int i = nextPos-1;
-      for (; i < itArray.length-1; i++) {
+      for (int i = lastPos; i < size; i++) {
         itArray[i] = itArray[i+1];
       }
-      itArray[i] = null;
       nextPos--;
-      nextRemovable = false;
+      lastPos = -1;
     }
 
     /**
@@ -180,20 +179,18 @@ public class ArrayList<E> implements Iterable<E> {
      *
      * @param e the element with which to replace the last element returned by
      *          {@code next} or {@code previous}
-     * @throws UnsupportedOperationException if the {@code set} operation
-     *         is not supported by this list iterator
-     * @throws ClassCastException if the class of the specified element
-     *         prevents it from being added to this list
-     * @throws IllegalArgumentException if some aspect of the specified
-     *         element prevents it from being added to this list
      * @throws IllegalStateException if neither {@code next} nor
      *         {@code previous} have been called, or {@code remove} or
      *         {@code add} have been called after the last call to
      *         {@code next} or {@code previous}
      */
     public void set(E e) {
-      //todo:ambantis:how should we test for add or remove?
-      itArray[nextPos-1] = e;
+      if (lastPos < 0)
+        throw new IllegalStateException("set last element cannot be called if neither `next()` " +
+            "nor `previous()` have been called, or `add()` have been called after last call to " +
+            "`next()` or `previous()`");
+      itArray[lastPos] = e;
+      lastPos = -1;
     }
 
     /**
@@ -217,7 +214,12 @@ public class ArrayList<E> implements Iterable<E> {
      *         prevents it from being added to this list
      */
     public void add(E e) {
-      throw new UnsupportedOperationException("This feature has not yet been implemented");
+      for (int i = size; i > nextPos; i--) {
+        itArray[i+1] = itArray[i];
+      }
+      itArray[nextPos] = e;
+      lastPos = nextPos;
+      nextPos++;
     }
 
   }
@@ -245,7 +247,60 @@ public class ArrayList<E> implements Iterable<E> {
     return true;
   }
 
+  @Override
+  public int hashCode() {
+    int result = "ArrayList".hashCode();
+    Integer i = 17;
+    for (E e : this) {
+      result += (e.hashCode() * i.hashCode());
+      i++;
+    }
+    return result;
+  }
 
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null)
+      return false;
+    if (!(obj instanceof ArrayList<?>))
+      return false;
+    @SuppressWarnings("unchecked")
+    ArrayList<Object> that = (ArrayList<Object>) obj;
+    if (this.size() != that.size())
+      return false;
+    {
+      ListIterator<E> itThis = this.iterator();
+      ListIterator<Object> itThat = that.iterator();
+      E thing1;
+      Object thing2;
+      while (itThis.hasNext()) {
+        thing1 = itThis.next();
+        thing2 = itThat.next();
+        if (!thing1.equals(thing2))
+          return false;
+      }
+    }
+    return true;
+  }
 
+  @Override
+  public String toString() {
+    String string = "ArrayList()";
+    if (size > 0) {
+      ListIterator<E> it = this.iterator();
+      E e = null;
+      StringBuilder sb = new StringBuilder(size);
+      sb.append("ArrayList(");
+      for (int i = 0, len = size; i < len; i++) {
+        e = it.next();
+        sb.append(e.toString());
+        if (i < len-1)
+          sb.append(",");
+      }
+      sb.append(")");
+      string = sb.toString();
+    }
+    return string;
+  }
 
 }

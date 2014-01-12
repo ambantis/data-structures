@@ -122,7 +122,18 @@ public class ArrayListIteratorTest {
 
   @Test
   public void testArrayListIteratorRemove() {
-    assertTrue("Failure - not implemented", false);
+    int expected = 12;
+    ListIterator<Integer> it5 = listFiveInts.iterator();
+    it5.next(); // 1
+    it5.next(); // 2
+    it5.next(); // 3
+    it5.remove();
+    int expected = 0;
+    for (Integer i : listFiveInts) {
+      expected += i;
+    }
+    assertTrue("Failure - call to remove should have removed `3`", expected == actual);
+
   }
 
   @Test
