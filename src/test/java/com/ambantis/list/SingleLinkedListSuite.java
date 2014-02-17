@@ -1,12 +1,11 @@
-package com.ambantis.lists;
+package com.ambantis.list;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-  ArrayListIteratorTest.class,
-  ArrayListTest.class
+  MyLinkedListTest.class
 })
 
-public class ArrayListSuite {}
+public class SingleLinkedListSuite {}

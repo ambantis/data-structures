@@ -1,4 +1,4 @@
-package com.ambantis.lists;
+package com.ambantis.list;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertFalse;

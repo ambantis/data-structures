@@ -1,4 +1,4 @@
-package com.ambantis.lists;
+package com.ambantis.list;
 
 import java.lang.IllegalStateException;
 import java.lang.Integer;

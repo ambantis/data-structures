@@ -1,4 +1,4 @@
-package com.ambantis.lists;
+package com.ambantis.list;
 
 import java.lang.IllegalArgumentException;
 import java.lang.NullPointerException;

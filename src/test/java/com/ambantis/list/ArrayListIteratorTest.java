@@ -1,4 +1,4 @@
-package com.ambantis.lists;
+package com.ambantis.list;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -21,6 +21,10 @@ public class ArrayListIteratorTest {
   ArrayList<Integer> listTwoInts;
   ArrayList<Integer> listFiveInts;
 
+  ListIterator<Integer> it0;
+  ListIterator<Integer> it2;
+  ListIterator<Integer> it5;
+
   @Before
   public void setup() {
     listEmptyInts = new ArrayList<Integer>();
@@ -34,18 +38,20 @@ public class ArrayListIteratorTest {
     listFiveInts.add(3);
     listFiveInts.add(4);
     listFiveInts.add(5);
+
+    it0 = listEmptyInts.iterator();
+    it2 = listTwoInts.iterator();
+    it5 = listFiveInts.iterator();
   }
 
   @Test
   public void testArrayListIteratorHasNext1() {
-    ListIterator<Integer> it0 = listEmptyInts.iterator();
     assertFalse("Failure - List(1,2).iterator() should not have next after two calls to next()",
         it0.hasNext());
   }
 
   @Test
   public void testArrayListIteratorNext() {
-    ListIterator<Integer> it2 = listTwoInts.iterator();
     it2.next();
     int expected = 2;
     int actual = it2.next();
@@ -55,7 +61,6 @@ public class ArrayListIteratorTest {
 
   @Test(expected = NoSuchElementException.class)
   public void testArrayListIteratorNextThrowsException() {
-    ListIterator<Integer> it2 = listTwoInts.iterator();
     it2.next();
     it2.next();
     it2.next();
@@ -63,7 +68,6 @@ public class ArrayListIteratorTest {
 
   @Test
   public void testArrayListIteratorHasPreviousTrue() {
-    ListIterator<Integer> it2 = listTwoInts.iterator();
     it2.next();
     it2.next();
     boolean expected = it2.hasPrevious();
@@ -72,27 +76,21 @@ public class ArrayListIteratorTest {
 
   @Test
   public void testArrayListIteratorHasPreviousFalse() {
-    ListIterator<Integer> it0 = listEmptyInts.iterator();
     assertFalse("Failure - List().iterator().hasPrevious should be false", it0.hasPrevious());
   }
 
   @Test
   public void testArrayListIteratorPreviousTrue() {
-    ListIterator<Integer> it2 = listTwoInts.iterator();
-    int first = it2.next();
-    System.out.println("first = " + first);
-    int second = it2.next();
-    System.out.println("second = " + second);
+    it2.next();
+    it2.next();
     int expected = 1;
     int actual = it2.previous();
-    System.out.println("previous = " + actual);
     assertTrue("Failure - List(1,2).iterator().next().next().previous() should be 1 " +
         "but instead was " + actual, expected == actual);
   }
 
   @Test(expected = NoSuchElementException.class)
   public void testArrayListIteratorPreviousFalse() {
-    ListIterator<Integer> it2 = listTwoInts.iterator();
     it2.next();
     it2.next();
     it2.previous();
@@ -101,7 +99,6 @@ public class ArrayListIteratorTest {
 
   @Test
   public void testArrayListIteratorNextIndex() {
-    ListIterator<Integer> it2 = listTwoInts.iterator();
     it2.next();
     int expected = 1;
     int actual = it2.nextIndex();
@@ -111,7 +108,6 @@ public class ArrayListIteratorTest {
 
   @Test
   public void testArrayListIteratorPreviousIndex() {
-    ListIterator<Integer> it2 = listTwoInts.iterator();
     it2.next();
     it2.next();
     int expected = 0;
@@ -123,27 +119,27 @@ public class ArrayListIteratorTest {
   @Test
   public void testArrayListIteratorRemove() {
     int expected = 12;
-    ListIterator<Integer> it5 = listFiveInts.iterator();
     it5.next(); // 1
     it5.next(); // 2
     it5.next(); // 3
     it5.remove();
-    int expected = 0;
+    System.out.println("listFiveInts = " + listFiveInts);
+    int actual = 0;
     for (Integer i : listFiveInts) {
-      expected += i;
+      actual += i;
     }
     assertTrue("Failure - call to remove should have removed `3`", expected == actual);
 
   }
 
-  @Test
-  public void testArrayListIteratorSet() {
-    assertTrue("Failure - not implemented", false);
-  }
-
-  @Test
-  public void testArrayListIteratorAdd() {
-    assertTrue("Failure - not implemented", false);
-  }
+// @Test
+// public void testArrayListIteratorSet() {
+//   assertTrue("Failure - not implemented", false);
+// }
+//
+// @Test
+// public void testArrayListIteratorAdd() {
+//   assertTrue("Failure - not implemented", false);
+// }
 
 }
