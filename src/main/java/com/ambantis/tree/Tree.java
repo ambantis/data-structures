@@ -1,9 +1,9 @@
 package com.ambantis.tree;
 
-public interface Tree<E> {
+public interface Tree {
 
-  public boolean contains(E e);
+  public boolean contains(int data);
 
-  public void insert(E e);
+  public void insert(int data);
 
 }

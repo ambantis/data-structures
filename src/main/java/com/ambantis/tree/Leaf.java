@@ -1,16 +1,15 @@
 package com.ambantis.tree;
 
-class Leaf<E> extends Node<E> {
-  private final E e;
+class Leaf extends OldNode {
+  private final Integer data;
 
-  Leaf(E data) {
+  Leaf(Integer data) {
     if (data == null)
       throw new IllegalArgumentException("a node cannot contain null values");
-    this.e = data;
+    this.data = data;
   }
 
-  @Override
-  E value() {
-    return e;
+  Integer value() {
+    return data;
   }
 }
