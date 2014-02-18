@@ -12,10 +12,12 @@ import org.junit.Test;
 public class BTreeTest {
 
   BTree tree123;
+  BTree treeEleven;
 
   @Before
   public void setup() {
     tree123 = new BTree(2,1,3);
+    treeEleven = new BTree(5,3,7,2,4,6,10,9,11,1,8);
   }
 
   @Test
@@ -42,15 +44,24 @@ public class BTreeTest {
 
   @Test
   public void testSizeBigger() {
-    BTree tree = new BTree(5,3,7,2,4,6,10,9,11,1,8);
     assertTrue("Failure - Tree(5,3,7,2,4,6,10,9,11,1,8 should = 11",
-        tree.size() == 11);
+        treeEleven.size() == 11);
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testMaxDepth123() {
-    assertFalse("Failure - BTree(2,1,3) should have maxDepth = 1",
-        tree123.maxDepth() == 1);
+    int expected = 2;
+    int actual = tree123.maxDepth();
+    assertTrue("Failure - BTree(2,1,3) should have maxDepth = 2 but instead was " +
+        actual, expected == actual);
+  }
+
+  @Test
+  public void testMaxDepthEleven() {
+    int expected = 5;
+    int actual = treeEleven.maxDepth();
+    assertTrue("Failure - Tree(5,3,7,2,4,6,10,9,11,1,8) should equal 5 but instead was " +
+        actual, expected == actual);
   }
 
 }

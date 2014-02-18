@@ -39,7 +39,8 @@ public class BTree implements Tree {
   }
 
   public int maxDepth() {
-    throw new UnsupportedOperationException("maxDepth not implemented");
+    return (root == null) ? 0 : recursiveDepth(1, root);
+
   }
 
   private Boolean recursiveLookup(Node node, int data) {
@@ -82,6 +83,22 @@ public class BTree implements Tree {
       result = recursiveInsert(node.right(), data);
     } else {// data == node.value()
       throw new IllegalArgumentException("duplicates are not allowed");
+    }
+    return result;
+  }
+
+  private int recursiveDepth(int depth, Node node) {
+    int result;
+    if (node.left() == null && node.right() == null) {
+      result = depth;
+    } else if (node.left() != null && node.right() == null) {
+      result = recursiveDepth(depth+1, node.left());
+    } else if (node.left() == null && node.right() != null) {
+      result = recursiveDepth(depth+1, node.right());
+    } else { // node.left() != null && node.right() != null
+      result = Math.max(
+          recursiveDepth(depth+1, node.left()),
+          recursiveDepth(depth+1, node.right()));
     }
     return result;
   }
