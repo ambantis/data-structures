@@ -40,7 +40,13 @@ public class BTree implements Tree {
 
   public int maxDepth() {
     return (root == null) ? 0 : recursiveDepth(1, root);
+  }
 
+  public int minValue() {
+    if (root == null)
+      throw new NullPointerException("an empty tree does not have a minumum value");
+    else
+      throw new UnsupportedOperationException("Not yet implemented");
   }
 
   private Boolean recursiveLookup(Node node, int data) {

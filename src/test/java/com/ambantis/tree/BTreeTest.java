@@ -13,11 +13,13 @@ public class BTreeTest {
 
   BTree tree123;
   BTree treeEleven;
+  BTree treeEmpty;
 
   @Before
   public void setup() {
     tree123 = new BTree(2,1,3);
     treeEleven = new BTree(5,3,7,2,4,6,10,9,11,1,8);
+    treeEmpty = new BTree();
   }
 
   @Test
@@ -64,4 +66,16 @@ public class BTreeTest {
         actual, expected == actual);
   }
 
+  @Test(expected = NullPointerException.class)
+  public void testMinValueEmptyTree() {
+    treeEmpty.minValue();
+  }
+
+  @Test(expected = UnsupportedOperationException.class)
+  public void testMinValue123() {
+    int expected = 1;
+    int actual = tree123.minValue();
+    assertTrue("Failure - Tree(2,1,3) should have minValue = 1 but instead was " +
+        actual, expected == actual);
+  }
 }

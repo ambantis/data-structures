@@ -10,4 +10,6 @@ public interface Tree {
 
   public int maxDepth();
 
+  public int minValue();
+
 }
