@@ -1,12 +1,11 @@
-package com.ambantis.list;
+package com.ambantis.tree;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-//  ArrayListIteratorTest.class,
-//  ArrayListTest.class
+  BTreeTest.class
 })
 
-public class ArrayListSuite {}
+public class TreeSuite {}
