@@ -9,17 +9,17 @@ import org.junit.runners.JUnit4;
 import org.junit.Test;
 
 @RunWith(JUnit4.class)
-public class BTreeTest {
+public class BSTreeTest {
 
-  BTree tree123;
-  BTree treeEleven;
-  BTree treeEmpty;
+  BSTree tree123;
+  BSTree treeEleven;
+  BSTree treeEmpty;
 
   @Before
   public void setup() {
-    tree123 = new BTree(2,1,3);
-    treeEleven = new BTree(5,3,7,2,4,6,10,9,11,1,8);
-    treeEmpty = new BTree();
+    tree123 = new BSTree(2,1,3);
+    treeEleven = new BSTree(5,3,7,2,4,6,10,9,11,1,8);
+    treeEmpty = new BSTree();
   }
 
   @Test
@@ -54,7 +54,7 @@ public class BTreeTest {
   public void testMaxDepth123() {
     int expected = 2;
     int actual = tree123.maxDepth();
-    assertTrue("Failure - BTree(2,1,3) should have maxDepth = 2 but instead was " +
+    assertTrue("Failure - BSTree(2,1,3) should have maxDepth = 2 but instead was " +
         actual, expected == actual);
   }
 

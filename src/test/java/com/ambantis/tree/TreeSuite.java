@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-  BTreeTest.class
+  BSTreeTest.class
 })
 
 public class TreeSuite {}

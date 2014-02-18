@@ -3,14 +3,14 @@ package com.ambantis.tree;
 /**
  * Binary search trees
  */
-public class BTree implements Tree {
+public class BSTree implements Tree {
 
   private Node root = null;
   private int size = 0;
 
-  public BTree() {}
+  public BSTree() {}
 
-  public BTree(int elem, int... elems) {
+  public BSTree(int elem, int... elems) {
     root = new Node(elem);
     for (int i = 0; i < elems.length; i++)
       insert(elems[i]);
@@ -119,7 +119,7 @@ public class BTree implements Tree {
   }
 
   /**
-   * This recursive implementation relies upon the fact that the BTree is sorted
+   * This recursive implementation relies upon the fact that the BSTree is sorted
    * and thus the minimum value will always be in the leftmost corner of the tree
    */
   private int recursiveMinValue(Node node) {
