@@ -71,11 +71,19 @@ public class BTreeTest {
     treeEmpty.minValue();
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testMinValue123() {
     int expected = 1;
     int actual = tree123.minValue();
     assertTrue("Failure - Tree(2,1,3) should have minValue = 1 but instead was " +
         actual, expected == actual);
+  }
+
+  @Test
+  public void testMinValueEleven() {
+    int expected = 1;
+    int actual = tree123.minValue();
+    assertTrue("Failure - Tree(5,3,7,2,4,6,10,9,11,1,8) should have minValue = 11 " +
+        "but instead was " + actual, expected == actual);
   }
 }

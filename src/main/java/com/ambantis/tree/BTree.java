@@ -46,7 +46,7 @@ public class BTree implements Tree {
     if (root == null)
       throw new NullPointerException("an empty tree does not have a minumum value");
     else
-      throw new UnsupportedOperationException("Not yet implemented");
+      return recursiveMinValue(root);
   }
 
   private Boolean recursiveLookup(Node node, int data) {
@@ -107,5 +107,13 @@ public class BTree implements Tree {
           recursiveDepth(depth+1, node.right()));
     }
     return result;
+  }
+
+  /**
+   * This recursive implementation relies upon the fact that the BTree is sorted
+   * and thus the minimum value will always be in the leftmost corner of the tree
+   */
+  private int recursiveMinValue(Node node) {
+    return (node.left() == null) ? node.value() : recursiveMinValue(node.left());
   }
 }
