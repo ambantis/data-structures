@@ -12,4 +12,5 @@ public interface Tree {
 
   public int minValue();
 
+  public String printTree();
 }

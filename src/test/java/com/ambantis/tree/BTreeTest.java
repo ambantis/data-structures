@@ -86,4 +86,12 @@ public class BTreeTest {
     assertTrue("Failure - Tree(5,3,7,2,4,6,10,9,11,1,8) should have minValue = 11 " +
         "but instead was " + actual, expected == actual);
   }
+
+  @Test(expected = UnsupportedOperationException.class)
+  public void testPrintTree123() {
+    String expected = "1 2 3 4 5";
+    String actual = tree123.printTree();
+    assertTrue("Failure - Tree(2,1,3).printTree() should be `1 2 3'` but instead was " +
+        expected, expected.equals(actual));
+  }
 }

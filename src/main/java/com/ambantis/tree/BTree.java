@@ -49,6 +49,10 @@ public class BTree implements Tree {
       return recursiveMinValue(root);
   }
 
+  public String printTree() {
+    throw new UnsupportedOperationException("printTree not yet implemented");
+  }
+
   private Boolean recursiveLookup(Node node, int data) {
     boolean result = false;
     if (data == node.value()) {
