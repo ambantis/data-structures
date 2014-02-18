@@ -50,7 +50,12 @@ public class BTree implements Tree {
   }
 
   public String printTree() {
-    throw new UnsupportedOperationException("printTree not yet implemented");
+    StringBuilder sb = new StringBuilder();
+    sb.append("(");
+    String body = (root == null) ? "" : recursivePrintTree(root);
+    sb.append(body);
+    sb.append(")");
+    return sb.toString();
   }
 
   private Boolean recursiveLookup(Node node, int data) {
@@ -119,5 +124,23 @@ public class BTree implements Tree {
    */
   private int recursiveMinValue(Node node) {
     return (node.left() == null) ? node.value() : recursiveMinValue(node.left());
+  }
+
+  private String recursivePrintTree(Node node) {
+    String result = null;
+    if (node.left() == null && node.right() == null) {
+      result = Integer.valueOf(node.value()).toString();
+    } else if (node.left() != null && node.right() == null) {
+      result = recursivePrintTree(node.left()) + " " +
+        Integer.valueOf(node.value()).toString();
+    } else if (node.left() == null && node.right() != null) {
+      result = Integer.valueOf(node.value()).toString() + " " +
+        recursivePrintTree(node.right());
+    } else { // node.left() != null && node.right() != null
+      result = recursivePrintTree(node.left()) + " " +
+          Integer.valueOf(node.value()).toString() + " " +
+          recursivePrintTree(node.right());
+    }
+    return result;
   }
 }
