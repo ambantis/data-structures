@@ -8,4 +8,6 @@ public interface Tree {
 
   public int size();
 
+  public int maxDepth();
+
 }

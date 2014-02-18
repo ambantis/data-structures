@@ -1,5 +1,6 @@
 package com.ambantis.tree;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -44,6 +45,12 @@ public class BTreeTest {
     BTree tree = new BTree(5,3,7,2,4,6,10,9,11,1,8);
     assertTrue("Failure - Tree(5,3,7,2,4,6,10,9,11,1,8 should = 11",
         tree.size() == 11);
+  }
+
+  @Test(expected = UnsupportedOperationException.class)
+  public void testMaxDepth123() {
+    assertFalse("Failure - BTree(2,1,3) should have maxDepth = 1",
+        tree123.maxDepth() == 1);
   }
 
 }
