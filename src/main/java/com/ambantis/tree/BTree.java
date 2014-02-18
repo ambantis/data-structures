@@ -5,15 +5,15 @@ package com.ambantis.tree;
  */
 public class BTree implements Tree {
 
-  private Node root;
+  private Node root = null;
   private int size = 0;
 
-  public BTree() {
-    root = null;
-  }
+  public BTree() {}
 
-  public BTree(int data) {
-    root = new Node(data);
+  public BTree(int elem, int... elems) {
+    root = new Node(elem);
+    for (int i = 0; i < elems.length; i++)
+      insert(elems[i]);
   }
 
   public boolean contains(int data) {
